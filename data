@@ -1,0 +1,7 @@
+| Plant           | Max Capacity (MW) | Revenue per MW (\$) |
+| --------------- | ----------------: | ------------------: |
+| Solar\_Farm\_1  |                50 |                  70 |
+| Wind\_Plant\_1  |                60 |                  90 |
+| Hydro\_Plant\_1 |                40 |                  60 |
+| Solar\_Farm\_2  |                30 |                  65 |
+| Wind\_Plant\_2  |                20 |                  80 |
