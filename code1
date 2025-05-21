@@ -1,0 +1,39 @@
+# Install PuLP if not already installed:
+# pip install pulp
+
+from pulp import LpMaximize, LpProblem, LpVariable, lpSum
+
+# Example: Allocate resources to 3 projects with resource constraints
+
+# Projects
+projects = ["Project_A", "Project_B", "Project_C"]
+
+# Profit per unit resource allocated to each project
+profit = {"Project_A": 30, "Project_B": 20, "Project_C": 40}
+
+# Max resource allowed per project
+max_resource = {"Project_A": 30, "Project_B": 40, "Project_C": 20}
+
+# Total available resources
+total_resources = 60
+
+# Define the LP problem
+model = LpProblem("Resource-Allocation", LpMaximize)
+
+# Define variables
+resource_alloc = {p: LpVariable(f"alloc_{p}", lowBound=0, upBound=max_resource[p]) for p in projects}
+
+# Objective: Maximize total profit
+model += lpSum(profit[p] * resource_alloc[p] for p in projects), "Total_Profit"
+
+# Constraint: Do not exceed total available resources
+model += lpSum(resource_alloc[p] for p in projects) <= total_resources, "Resource_Limit"
+
+# Solve the model
+model.solve()
+
+# Output results
+print("Status:", model.status)
+for p in projects:
+    print(f"Allocate to {p}: {resource_alloc[p].varValue} units")
+print("Total Profit:", model.objective.value())
